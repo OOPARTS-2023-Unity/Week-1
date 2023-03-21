@@ -80,8 +80,8 @@ public class PlayerController : MonoBehaviour
 
     private void Init()
     {
-        animator = gameObject.GetComponent<Animator>();
-        rgbody = gameObject.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        rgbody = GetComponent<Rigidbody2D>();
 
         rgbody.position = INIT_POSITION;
         rgbody.velocity = Vector3.zero;
