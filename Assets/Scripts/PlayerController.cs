@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     Animator animator;
     Rigidbody2D rgbody;
+    SpriteRenderer spriteRenderer;
 
     // Tooltip은 에디터에서 플로팅 도움말을 띄워줍니다.
     [Tooltip("Jump power")]
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rgbody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         rgbody.position = INIT_POSITION;
         rgbody.velocity = Vector3.zero;
@@ -103,11 +105,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             keyInputCheck[(int)KeyInput.UP] = true;
-        }
-
-        if (Input.GetKeyUp(KeyCode.UpArrow))
-        {
-            keyInputCheck[(int)KeyInput.UP] = false;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -134,7 +131,12 @@ public class PlayerController : MonoBehaviour
     {
         if (keyInputCheck[(int)KeyInput.UP])
         {
-
+            keyInputCheck[(int)KeyInput.UP] = false;
+            if (currentJumpCount < MAX_JUMP_COUNT)
+            {
+                rgbody.AddForce(new Vector2(0, 1) * JUMP_POWER);
+                currentJumpCount++;
+            }
         }
     }
 
@@ -142,12 +144,17 @@ public class PlayerController : MonoBehaviour
     {
         if (keyInputCheck[(int)KeyInput.LEFT])
         {
-
+            spriteRenderer.flipX = true;
+            if(Math.Abs(rgbody.velocity.x) < MAX_SPEED)
+                rgbody.AddForce(new Vector2(-1, 0) * ACCELATION);
+           
         }
 
         if (keyInputCheck[(int)KeyInput.RIGHT])
         {
-
+            spriteRenderer.flipX = false;
+            if (Math.Abs(rgbody.velocity.x) < MAX_SPEED)
+                rgbody.AddForce(new Vector2(1, 0) * ACCELATION);
         }
     }
 
@@ -158,6 +165,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Platform"))
         {
             animator.SetBool("isOnGround", true);
+            currentJumpCount = 0;
         }
     }
 
@@ -175,11 +183,11 @@ public class PlayerController : MonoBehaviour
     {
         if (trigger.gameObject.layer == LayerMask.NameToLayer("Goal"))
         {
-
+            Debug.Log("Goal!");
         }
         if (trigger.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-
+            Debug.Log("Obstacle!");
         }
     }
 }
