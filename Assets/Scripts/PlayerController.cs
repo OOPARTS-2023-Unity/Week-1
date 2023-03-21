@@ -36,15 +36,14 @@ public class PlayerController : MonoBehaviour
     private bool[] keyInputCheck;
 
     // 생명주기 함수들
-    // Awake는 항상 Start 이전에 호출되는 것이 보장됩니다. (언제 호출될지는 모름)
-    // 한 번 호출됩니다.
+    // Awake는 항상 Start 이전에 한 번 호출됩니다. (언제 호출될지는 모름)
     void Awake()
     {
         Init();
     }
 
     // Start is called before the first frame update
-    // Awake 이후에 단 한번 호출됩니다.
+    // Awake 이후에 단 한 번 호출됩니다.
     void Start()
     {
         
@@ -123,7 +122,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 저장된 입력값을 확인해서 플레이어를 움직입니다
+    // 저장된 입력값을 확인해서 플레이어를 움직입니다.
     private void PlayerJump()
     {
         if (keyInputCheck[(int)KeyInput.UP])
@@ -145,7 +144,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    // 각 타일맵에 닿거나 떼어져을 때 이벤트를 처리합니다.
+    // 타일맵에 캐릭터가 닿을 때 이벤트를 처리합니다.
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Terrain"))
@@ -154,6 +153,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // 타일맵에 캐릭터가 떨어질 때 이벤트를 처리합니다.
     void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Terrain"))
@@ -162,6 +162,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // 타일맵의 지형 외에 다른 오브젝트와 부딪혔을 때 이벤트를 처리합니다.
     void OnTriggerEnter2D(Collider2D trigger)
     {
         if (trigger.gameObject.CompareTag("Flag"))
@@ -174,3 +175,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+
