@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetPlayerKeyInput();
+
+        animator.SetFloat("playerSpeed", Math.Abs(rgbody.velocity.x));
     }
 
     // 고정 프레임 시간마다 호출됩니다. 물리 연산은 여기서 해야합니다.
@@ -100,25 +102,30 @@ public class PlayerController : MonoBehaviour
         // 사용자의 입력을 받아서 처리합니다.
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            keyInputCheck[(int)KeyInput.UP] = true;
+        }
 
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            keyInputCheck[(int)KeyInput.UP] = false;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            
+            keyInputCheck[(int)KeyInput.LEFT] = true;
         }
         else
         {
-
+            keyInputCheck[(int)KeyInput.LEFT] = false;
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            
+            keyInputCheck[(int)KeyInput.RIGHT] = true;
         }
         else
         {
-
+            keyInputCheck[(int)KeyInput.RIGHT] = false;
         }
     }
 
@@ -137,6 +144,7 @@ public class PlayerController : MonoBehaviour
         {
 
         }
+
         if (keyInputCheck[(int)KeyInput.RIGHT])
         {
 
@@ -147,31 +155,31 @@ public class PlayerController : MonoBehaviour
     // 타일맵에 캐릭터가 닿을 때 이벤트를 처리합니다.
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Terrain"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Platform"))
         {
-            
+            animator.SetBool("isOnGround", true);
         }
     }
 
     // 타일맵에 캐릭터가 떨어질 때 이벤트를 처리합니다.
     void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Terrain"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Platform"))
         {
-            
+            animator.SetBool("isOnGround", false);
         }
     }
 
     // 타일맵의 지형 외에 다른 오브젝트와 부딪혔을 때 이벤트를 처리합니다.
     void OnTriggerEnter2D(Collider2D trigger)
     {
-        if (trigger.gameObject.CompareTag("Flag"))
+        if (trigger.gameObject.layer == LayerMask.NameToLayer("Goal"))
         {
-            
+
         }
-        if (trigger.gameObject.CompareTag("Obstacle"))
+        if (trigger.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            
+
         }
     }
 }
