@@ -109,20 +109,20 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            keyInputCheck[(int)KeyInput.LEFT] = true;
+            // 입력 처리
         }
         else
         {
-            keyInputCheck[(int)KeyInput.LEFT] = false;
+            // 입력 처리
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            keyInputCheck[(int)KeyInput.RIGHT] = true;
+            // 입력 처리
         }
         else
         {
-            keyInputCheck[(int)KeyInput.RIGHT] = false;
+            // 입력 처리
         }
     }
 
@@ -132,11 +132,7 @@ public class PlayerController : MonoBehaviour
         if (keyInputCheck[(int)KeyInput.UP])
         {
             keyInputCheck[(int)KeyInput.UP] = false;
-            if (currentJumpCount < MAX_JUMP_COUNT)
-            {
-                rgbody.AddForce(new Vector2(0, 1) * JUMP_POWER);
-                currentJumpCount++;
-            }
+            // 점프 구현
         }
     }
 
@@ -144,17 +140,14 @@ public class PlayerController : MonoBehaviour
     {
         if (keyInputCheck[(int)KeyInput.LEFT])
         {
-            spriteRenderer.flipX = true;
-            if(Math.Abs(rgbody.velocity.x) < MAX_SPEED)
-                rgbody.AddForce(new Vector2(-1, 0) * ACCELATION);
-           
+            // sprite renderer flip x -> true
+            // sprite move to left
         }
 
         if (keyInputCheck[(int)KeyInput.RIGHT])
         {
-            spriteRenderer.flipX = false;
-            if (Math.Abs(rgbody.velocity.x) < MAX_SPEED)
-                rgbody.AddForce(new Vector2(1, 0) * ACCELATION);
+            // sprite renderer flip x -> false
+            // sprite move to right
         }
     }
 
