@@ -181,13 +181,14 @@ public class PlayerController : MonoBehaviour
     // 타일맵의 지형 외에 다른 오브젝트와 부딪혔을 때 이벤트를 처리합니다.
     void OnTriggerEnter2D(Collider2D trigger)
     {
+        Debug.Log(LayerMask.NameToLayer("Goal"));
         if (trigger.gameObject.layer == LayerMask.NameToLayer("Goal"))
         {
-            Debug.Log("Goal!");
+            GameManager.Play.PlayerWin(100);
         }
         if (trigger.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            Debug.Log("Obstacle!");
+            GameManager.Play.PlayerDead();
         }
     }
 }
